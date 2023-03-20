@@ -77,4 +77,22 @@ lista_num.reverse()
 for i in range(len(lista_num)):
     print('elemento en indice', i, lista_num[i])
 
-#! FUNCIONES
+#! FUNCIONES    
+
+numero = 0 
+
+
+def mi_funcion2():
+    print('hola')
+
+def mi_funcion(num1, lista):
+    lista.pop()
+    print('salida de la funcio', mi_funcion2())
+    num1 = 45
+    return lista
+
+
+valores = [1, 2, 3, 4]
+numero_1, msj, numero2 = mi_funcion(numero, valores) 
+print(numero_1, msj, numero2)
+print(valores)
