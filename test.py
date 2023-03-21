@@ -2,7 +2,7 @@
 #! IMPORTAR MODULOS
 
 #import math
-from math import sqrt, tan, cos,
+from math import sqrt, tan, cos
 # import mi_modulo_de_funciones_en_python as func
 # from mi_modulo_de_funciones_en_python import suma, tan as mi_tan
 
