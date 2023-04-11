@@ -12,8 +12,8 @@ class Pila():
         else:
             return False
 
-    def push(self, dato):
-        self.__elements.append(dato)
+    def push(self, value):
+        self.__elements.append(value)
 
     def pop(self):
         if self.size() > 0:
@@ -50,4 +50,25 @@ class Pila():
 
 # print('tamanio', pila_1.size(), pila_aux.size())
 
+#! crear las estucturas
+pila = Pila()
+pila_aux = Pila()
 
+#! carga
+from random import randint
+for i in range(10):
+    pila.push(randint(1, 100))
+
+#! resolver problema
+while pila.size() > 0:
+    valor = pila.pop()
+    if valor % 2 == 0:
+        # print('es par', valor)
+        pila_aux.push(valor)
+    # else:
+    #     print('es impar', valor)
+
+while pila_aux.size() > 0:
+    pila.push(pila_aux.pop())
+
+print(pila.size())

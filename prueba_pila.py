@@ -48,31 +48,31 @@ from random import randint
 
 # print(f'la cantidad de vocales son {contador_vocales}')
 
-pila1 = Pila()
-pila2 = Pila()
-pila3 = Pila()
+# pila1 = Pila()
+# pila2 = Pila()
+# pila3 = Pila()
 
 
-palabra = input('ingrese un palabra ')
-for letra in palabra:
-    pila1.push(letra)
+# palabra = input('ingrese un palabra ')
+# for letra in palabra:
+#     pila1.push(letra)
 
-while pila1.size() > 0:
-    valor = pila1.pop()
-    pila2.push(valor)
-    pila3.push(valor)
+# while pila1.size() > 0:
+#     valor = pila1.pop()
+#     pila2.push(valor)
+#     pila3.push(valor)
 
-while pila3.size() > 0:
-    pila1.push(pila3.pop())
+# while pila3.size() > 0:
+#     pila1.push(pila3.pop())
 
-while pila1.size() > 0 and pila1.on_top() == pila2.on_top():
-    pila1.pop()
-    pila2.pop()
+# while pila1.size() > 0 and pila1.on_top() == pila2.on_top():
+#     pila1.pop()
+#     pila2.pop()
 
-if pila1.size() == 0:
-    print('es palindromo')
-else:
-    print('no es palindromo')
+# if pila1.size() == 0:
+#     print('es palindromo')
+# else:
+#     print('no es palindromo')
 
 # if pila1 == pila2:
 #     print('es palindromo')
