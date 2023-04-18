@@ -57,17 +57,33 @@ def es_primo(numero):
 
 cola_aux = Cola()
 plia_aux = Pila()
-for i in range(5):
-    plia_aux.push(randint(0, 50))
+# for i in range(5):
+#     plia_aux.push(randint(0, 50))
 
-while plia_aux.size() > 0:
-    # print(plia_aux.on_top())
-    cola_aux.arrive(plia_aux.pop())
+# while plia_aux.size() > 0:
+#     # print(plia_aux.on_top())
+#     cola_aux.arrive(plia_aux.pop())
 
-while cola_aux.size() > 0:
-    plia_aux.push(cola_aux.atention())
+# while cola_aux.size() > 0:
+#     plia_aux.push(cola_aux.atention())
 
 # print()
 # while plia_aux.size() > 0:
 #     print(plia_aux.pop())
-    
+
+# #! carga
+palabra = input('ingrese una palabra ')
+
+for letra in palabra:
+    plia_aux.push(letra)
+    cola_aux.arrive(letra)
+
+
+while plia_aux.size() > 0 and plia_aux.on_top() == cola_aux.on_front():
+    plia_aux.pop()
+    cola_aux.atention()
+
+if plia_aux.size() > 0:
+    print('no es palindromo')
+else:
+    print('es palindromo')
