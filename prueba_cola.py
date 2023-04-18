@@ -2,6 +2,7 @@ from cola import Cola
 from pila import Pila
 from random import randint
 
+
 cola = Cola()
 
 # #! carga
@@ -72,18 +73,37 @@ plia_aux = Pila()
 #     print(plia_aux.pop())
 
 # #! carga
-palabra = input('ingrese una palabra ')
+# palabra = input('ingrese una palabra ')
 
-for letra in palabra:
-    plia_aux.push(letra)
-    cola_aux.arrive(letra)
+# for letra in palabra:
+#     plia_aux.push(letra)
+#     cola_aux.arrive(letra)
 
 
-while plia_aux.size() > 0 and plia_aux.on_top() == cola_aux.on_front():
-    plia_aux.pop()
-    cola_aux.atention()
+# while plia_aux.size() > 0 and plia_aux.on_top() == cola_aux.on_front():
+#     plia_aux.pop()
+#     cola_aux.atention()
 
-if plia_aux.size() > 0:
-    print('no es palindromo')
-else:
-    print('es palindromo')
+# if plia_aux.size() > 0:
+#     print('no es palindromo')
+# else:
+#     print('es palindromo')
+
+valores = [3, 5, 1, 4, 2]
+
+
+for numero in valores:
+    if cola_aux.size() == 0:
+        cola_aux.arrive(numero)
+    elif numero < cola_aux.on_front():
+        cola_aux.arrive(numero)
+        contador = 0
+        while contador < cola_aux.size()-1:
+            cola_aux.move_to_end()
+            contador += 1
+    else:
+        pass
+
+
+while cola_aux.size() > 0:
+    print(cola_aux.atention())

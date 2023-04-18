@@ -27,47 +27,47 @@ class Pila():
         if self.size() > 0:
             return self.__elements[-1]
 
-class PeliculaMarvel():
+# class PeliculaMarvel():
 
-    def __init__(self, title, year):
-        self.__title = title
-        self.__year = year
+#     def __init__(self, title, year):
+#         self.__title = title
+#         self.__year = year
     
-    def get_title(self):
-        return self.__title
+#     def get_title(self):
+#         return self.__title
 
-    def get_year(self):
-        return self.__year
+#     def get_year(self):
+#         return self.__year
 
-    def __str__(self):
-        return f'{self.__title} - {self.__year}'
-
-
-pelis = [
-    #! 1 dictionary 
-    # {'title': 'iron man', 'year': 2008},
-    # {'title': 'iron man', 'year': 2010},
-    # {'title': 'capitan america', 'year': 2011}
-    #? list
-    # ['iron man', 2008],
-    # ['iron man', 2010],
-    # ['capitan america', 2011]
-    #* class
-    PeliculaMarvel('iron man', 2008),
-    PeliculaMarvel('iron man', 2010),
-    PeliculaMarvel('capitan america', 2011),
-]
+#     def __str__(self):
+#         return f'{self.__title} - {self.__year}'
 
 
-pila_1 = Pila()
-for peli in pelis:
-    pila_1.push(peli)
+# pelis = [
+#     #! 1 dictionary 
+#     # {'title': 'iron man', 'year': 2008},
+#     # {'title': 'iron man', 'year': 2010},
+#     # {'title': 'capitan america', 'year': 2011}
+#     #? list
+#     # ['iron man', 2008],
+#     # ['iron man', 2010],
+#     # ['capitan america', 2011]
+#     #* class
+#     PeliculaMarvel('iron man', 2008),
+#     PeliculaMarvel('iron man', 2010),
+#     PeliculaMarvel('capitan america', 2011),
+# ]
 
-while pila_1.size() > 0:
-    dato = pila_1.pop()
-    # print(dato.get_title(), dato.get_year())
-    if dato.get_year() == 2008:
-        print(dato.get_year(), 'se estreno en el 2008')
+
+# pila_1 = Pila()
+# for peli in pelis:
+#     pila_1.push(peli)
+
+# while pila_1.size() > 0:
+#     dato = pila_1.pop()
+#     # print(dato.get_title(), dato.get_year())
+#     if dato.get_year() == 2008:
+#         print(dato.get_year(), 'se estreno en el 2008')
 
 # pila_aux = Pila()
 # pila_1.push(3)
