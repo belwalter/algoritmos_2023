@@ -107,3 +107,9 @@ for numero in valores:
 
 while cola_aux.size() > 0:
     print(cola_aux.atention())
+
+
+  
+
+# cola = [1, 2, 3, 4, 5, 7]
+# cola_aux = []
