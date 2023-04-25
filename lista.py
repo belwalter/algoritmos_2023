@@ -43,7 +43,7 @@ class Lista():
     def get_element_by_value(self, value):
         return_value = None
         pos = self.search(value)
-        
+
         if pos is not None:
             return_value = self.__elements[pos]
         return return_value
@@ -54,21 +54,29 @@ class Lista():
             return_value = self.__elements[index]
         return return_value
 
+    def set_value(self, value, new_value):
+        pos = self.search(value)
+        if pos is not None:
+            value = self.delete(value)
+            self.insert(new_value)
 
-# lista_prueba = Lista()
 
-# lista_prueba.insert(5)
-# lista_prueba.insert(3)
-# lista_prueba.insert(1)
-# lista_prueba.insert(8)
-# lista_prueba.insert(4)
-# lista_prueba.insert(6)
-# lista_prueba.insert(2)
-# lista_prueba.insert(3)
-# lista_prueba.insert(7)
-# lista_prueba.insert(1)
+lista_prueba = Lista()
 
-# lista_prueba.barrido()
+lista_prueba.insert(5)
+lista_prueba.insert(3)
+lista_prueba.insert(1)
+lista_prueba.insert(8)
+lista_prueba.insert(4)
+lista_prueba.insert(6)
+lista_prueba.insert(2)
+lista_prueba.insert(3)
+lista_prueba.insert(7)
+lista_prueba.insert(1)
+
+lista_prueba.set_value(5, 9)
+
+lista_prueba.barrido()
 # print()
 # print(lista_prueba.search(4))
 
