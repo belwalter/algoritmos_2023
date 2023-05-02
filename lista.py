@@ -1,27 +1,41 @@
 
 
+
+def criterio_comparacion(value, criterio):
+    if isinstance(value, (int, str, bool)):
+        # print('es un primitivo')
+        return value
+    else:
+        # print('no es un dato primitivo')
+        dic_atributos = value.__dict__
+        if criterio in dic_atributos:
+            return dic_atributos[criterio]
+        else:
+            print('no se puede ordenar por este criterio')
+
+
 class Lista():
 
     def __init__(self):
         self.__elements = []
 
-    def insert(self, value):
-        if len(self.__elements) == 0:
+    def insert(self, value, criterio=None):
+        # print('criterio de insercion', criterio)
+        if len(self.__elements) == 0 or criterio_comparacion(value, criterio) >= criterio_comparacion(self.__elements[-1], criterio):
             self.__elements.append(value)
-        elif value < self.__elements[0]:
+        elif criterio_comparacion(value, criterio) < criterio_comparacion(self.__elements[0], criterio):
             self.__elements.insert(0, value)
-        elif value >= self.__elements[-1]:
-            self.__elements.append(value)
         else:
             index = 1
-            while value >= self.__elements[index]:
+            while criterio_comparacion(value, criterio) >= criterio_comparacion(self.__elements[index], criterio):
                 index += 1
             self.__elements.insert(index, value)
 
-    def search(self, search_value):
+    def search(self, search_value, criterio=None):
+        #! modificra metodo hacer busqueda binaria
         position = None
         for index, value in enumerate(self.__elements):
-            if search_value == value:
+            if search_value == criterio_comparacion(value, criterio):
                 position = index
                 break
         return position
@@ -40,13 +54,13 @@ class Lista():
         for value in self.__elements:
             print(value)
 
-    def get_element_by_value(self, value):
-        return_value = None
-        pos = self.search(value)
+    # def get_element_by_value(self, value):
+    #     return_value = None
+    #     pos = self.search(value)
 
-        if pos is not None:
-            return_value = self.__elements[pos]
-        return return_value
+    #     if pos is not None:
+    #         return_value = self.__elements[pos]
+    #     return return_value
 
     def get_element_by_index(self, index):
         return_value = None
@@ -61,24 +75,62 @@ class Lista():
             self.insert(new_value)
 
 
+class Persona():
+
+    def __init__(self, nombre, apellido, edad):
+        self.nombre = nombre
+        self.edad = edad
+        self.apellido = apellido
+
+    def __str__(self):
+        return f'{self.nombre} - {self.apellido}'
+
+class Producto():
+    
+    def __init__(self, id, tipo):
+        self.id = id
+        self.tipo = tipo
+
+    def __str__(self):
+        return f'{self.id} - {self.tipo}'
+
+
+persona1 = Persona('Juana', 'Gomez', 34)
+persona2 = Persona('Mario', 'Impini', 47)
+persona3 = Persona('Laurato', 'Perez', 19)
+
+prod1 = Producto(3, 'abc')
+prod2 = Producto(1, 'zxs')
+# persona1.
+# print(criterio_comparacion(persona1, 'apellido'))
+
+# print(persona1.__dict__)
+
 lista_prueba = Lista()
 
-lista_prueba.insert(5)
-lista_prueba.insert(3)
-lista_prueba.insert(1)
-lista_prueba.insert(8)
-lista_prueba.insert(4)
-lista_prueba.insert(6)
-lista_prueba.insert(2)
-lista_prueba.insert(3)
-lista_prueba.insert(7)
-lista_prueba.insert(1)
-
-lista_prueba.set_value(5, 9)
+# lista_prueba.insert(prod1, 'id')
+# lista_prueba.insert(prod2, 'id')
+lista_prueba.insert(persona1, 'edad')
+lista_prueba.insert(persona2, 'edad')
+lista_prueba.insert(persona3, 'edad')
 
 lista_prueba.barrido()
+# lista_prueba.insert(5)
+# lista_prueba.insert(3)
+# lista_prueba.insert(1)
+# lista_prueba.insert(8)
+# lista_prueba.insert(4)
+# lista_prueba.insert(6)
+# lista_prueba.insert(2)
+# lista_prueba.insert(3)
+# lista_prueba.insert(7)
+# lista_prueba.insert(1)
+
+# lista_prueba.set_value(5, 9)
+
+# lista_prueba.barrido()
 # print()
-# print(lista_prueba.search(4))
+print(lista_prueba.search(34, 'edad'))
 
 # print(lista_prueba.delete(1))
 # print()
