@@ -1,6 +1,5 @@
 
 
-
 def criterio_comparacion(value, criterio):
     if isinstance(value, (int, str, bool)):
         # print('es un primitivo')
@@ -32,13 +31,29 @@ class Lista():
             self.__elements.insert(index, value)
 
     def search(self, search_value, criterio=None):
-        #! modificra metodo hacer busqueda binaria
         position = None
-        for index, value in enumerate(self.__elements):
-            if search_value == criterio_comparacion(value, criterio):
-                position = index
-                break
+        first = 0
+        last = self.size() - 1
+        while (first <= last and position == None):
+            middle = (first + last) // 2
+            if search_value == criterio_comparacion(self.__elements[middle], criterio):
+                position = middle
+            elif search_value > criterio_comparacion(self.__elements[middle], criterio):
+                first = middle + 1
+            else:
+                last = middle - 1
         return position
+
+    def search_r(self, search_value, first, last, criterio=None):
+        middle = (first + last) // 2
+        if first > last:
+            return None
+        elif search_value == criterio_comparacion(self.__elements[middle], criterio):
+            return middle
+        elif search_value > criterio_comparacion(self.__elements[middle], criterio):
+            return self.search_r(search_value, middle+1, last, criterio)
+        else:
+            return self.search_r(search_value, first, middle-1, criterio)
 
     def delete(self, value):
         return_value = None
@@ -53,6 +68,12 @@ class Lista():
     def barrido(self):
         for value in self.__elements:
             print(value)
+
+    def order_by(self, criterio=None):
+        def criterio_nombre(valor):
+            return valor.nombre
+
+        self.__elements.sort(key=criterio_nombre)
 
     # def get_element_by_value(self, value):
     #     return_value = None
@@ -85,22 +106,24 @@ class Persona():
     def __str__(self):
         return f'{self.nombre} - {self.apellido}'
 
-class Producto():
-    
-    def __init__(self, id, tipo):
-        self.id = id
-        self.tipo = tipo
 
-    def __str__(self):
-        return f'{self.id} - {self.tipo}'
+# class Producto():
+    
+#     def __init__(self, id, tipo):
+#         self.id = id
+#         self.tipo = tipo
+
+#     def __str__(self):
+#         return f'{self.id} - {self.tipo}'
 
 
 persona1 = Persona('Juana', 'Gomez', 34)
 persona2 = Persona('Mario', 'Impini', 47)
 persona3 = Persona('Laurato', 'Perez', 19)
+persona4 = Persona('Leo', 'Impini', 33)
+persona5 = Persona('Maria', 'Sittoni', 7)
+persona6 = Persona('Julieta', 'Alem', 20)
 
-prod1 = Producto(3, 'abc')
-prod2 = Producto(1, 'zxs')
 # persona1.
 # print(criterio_comparacion(persona1, 'apellido'))
 
@@ -110,9 +133,12 @@ lista_prueba = Lista()
 
 # lista_prueba.insert(prod1, 'id')
 # lista_prueba.insert(prod2, 'id')
-lista_prueba.insert(persona1, 'edad')
-lista_prueba.insert(persona2, 'edad')
-lista_prueba.insert(persona3, 'edad')
+lista_prueba.insert(persona1, 'apellido')
+lista_prueba.insert(persona2, 'apellido')
+lista_prueba.insert(persona3, 'apellido')
+lista_prueba.insert(persona4, 'apellido')
+lista_prueba.insert(persona5, 'apellido')
+lista_prueba.insert(persona6, 'apellido')
 
 lista_prueba.barrido()
 # lista_prueba.insert(5)
@@ -130,7 +156,15 @@ lista_prueba.barrido()
 
 # lista_prueba.barrido()
 # print()
-print(lista_prueba.search(34, 'edad'))
+position = lista_prueba.search('Impini', 'apellido')
+print(position)
+print(lista_prueba.get_element_by_index(position))
+lista_prueba.order_by()
+print(lista_prueba.search('Leo', 'nombre'))
+
+# lista_valores = [5, 1, 5, 0, 10, 7]
+# 
+# print(lista_valores)
 
 # print(lista_prueba.delete(1))
 # print()
