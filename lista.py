@@ -89,11 +89,11 @@ class Lista():
             return_value = self.__elements[index]
         return return_value
 
-    def set_value(self, value, new_value):
-        pos = self.search(value)
+    def set_value(self, value, new_value, criterio=None):
+        pos = self.search(value, criterio)
         if pos is not None:
             value = self.delete(value)
-            self.insert(new_value)
+            self.insert(new_value, criterio)
 
 
 class Persona():
@@ -104,7 +104,7 @@ class Persona():
         self.apellido = apellido
 
     def __str__(self):
-        return f'{self.nombre} - {self.apellido}'
+        return f'{self.nombre} - {self.apellido} - {self.edad}'
 
 
 # class Producto():
@@ -117,29 +117,47 @@ class Persona():
 #         return f'{self.id} - {self.tipo}'
 
 
-persona1 = Persona('Juana', 'Gomez', 34)
-persona2 = Persona('Mario', 'Impini', 47)
-persona3 = Persona('Laurato', 'Perez', 19)
-persona4 = Persona('Leo', 'Impini', 33)
-persona5 = Persona('Maria', 'Sittoni', 7)
-persona6 = Persona('Julieta', 'Alem', 20)
+lista_prueba = Lista()
 
 
+def cargar_lista(lista_aux):
+    personas = [
+        ['Juana', 'Gomez', 34],
+        ['Mario', 'Impini', 47],
+        ['Laurato', 'Perez', 19],
+        ['Leo', 'Impini', 33],
+        ['Maria', 'Sittoni', 7],
+        ['Julieta', 'Alem', 20],
+    ]
+    for persona in personas:
+        lista_prueba.insert(Persona(persona[0], persona[1], persona[2]), 'apellido')
+
+def comienza_con(lista_aux, letra):
+    print()
+    print('prueba')
+    for i in range(lista_aux.size()):
+        persona = lista_aux.get_element_by_index(i)
+        if persona.nombre.startswith(letra):
+            print(persona)
+    print('prueba')
+    print()
+
+cargar_lista(lista_prueba)
+comienza_con(lista_prueba, 'Mar')
 # persona1.
 # print(criterio_comparacion(persona1, 'apellido'))
 
 # print(persona1.__dict__)
 
-lista_prueba = Lista()
 
 # lista_prueba.insert(prod1, 'id')
 # lista_prueba.insert(prod2, 'id')
-lista_prueba.insert(persona1, 'apellido')
-lista_prueba.insert(persona2, 'apellido')
-lista_prueba.insert(persona3, 'apellido')
-lista_prueba.insert(persona4, 'apellido')
-lista_prueba.insert(persona5, 'apellido')
-lista_prueba.insert(persona6, 'apellido')
+# lista_prueba.insert(persona1, 'apellido')
+# lista_prueba.insert(persona2, 'apellido')
+# lista_prueba.insert(persona3, 'apellido')
+# lista_prueba.insert(persona4, 'apellido')
+# lista_prueba.insert(persona5, 'apellido')
+# lista_prueba.insert(persona6, 'apellido')
 
 lista_prueba.barrido()
 # lista_prueba.insert(5)
@@ -158,8 +176,13 @@ lista_prueba.barrido()
 # lista_prueba.barrido()
 # print()
 position = lista_prueba.search('Impini', 'apellido')
-print('edad de persona', lista_prueba.get_element_by_index(position).edad)
-print('persona eliminada', lista_prueba.delete('Perez', 'apellido'))
+if position:
+    lista_prueba.get_element_by_index(position).edad = 100
+    print('edad de persona', lista_prueba.get_element_by_index(position).edad)
+persona = lista_prueba.delete('Perez', 'apellido')
+print('persona eliminada', persona)
+persona.apellido = 'Peréz'
+lista_prueba.insert(persona, 'apellido')
 print()
 lista_prueba.barrido()
 # print(lista_prueba.get_element_by_index(position))
@@ -179,7 +202,11 @@ lista_prueba.barrido()
 # print(lista_prueba.delete(3))
 # print(lista_prueba.__elements)
 
+# def contarmayoresde18(lista)
+#     print('dentro de la funcion')
+#     lista.barrido()
 
+# contarmayoresde18(lista_prueba)
 # lista_prueba.barrido()
 
 # print(lista_prueba.get_element_by_value(4))
