@@ -55,9 +55,9 @@ class Lista():
         else:
             return self.search_r(search_value, first, middle-1, criterio)
 
-    def delete(self, value):
+    def delete(self, value, criterio=None):
         return_value = None
-        pos = self.search(value)
+        pos = self.search(value, criterio)
         if pos is not None:
             return_value = self.__elements.pop(pos)
         return return_value
@@ -73,7 +73,7 @@ class Lista():
         def criterio_nombre(valor):
             return valor.nombre
 
-        self.__elements.sort(key=criterio_nombre)
+        self.__elements.sort(key=criterio_comparacion(criterio=criterio))
 
     # def get_element_by_value(self, value):
     #     return_value = None
@@ -124,6 +124,7 @@ persona4 = Persona('Leo', 'Impini', 33)
 persona5 = Persona('Maria', 'Sittoni', 7)
 persona6 = Persona('Julieta', 'Alem', 20)
 
+
 # persona1.
 # print(criterio_comparacion(persona1, 'apellido'))
 
@@ -157,10 +158,13 @@ lista_prueba.barrido()
 # lista_prueba.barrido()
 # print()
 position = lista_prueba.search('Impini', 'apellido')
-print(position)
-print(lista_prueba.get_element_by_index(position))
-lista_prueba.order_by()
-print(lista_prueba.search('Leo', 'nombre'))
+print('edad de persona', lista_prueba.get_element_by_index(position).edad)
+print('persona eliminada', lista_prueba.delete('Perez', 'apellido'))
+print()
+lista_prueba.barrido()
+# print(lista_prueba.get_element_by_index(position))
+# lista_prueba.order_by()
+# print(lista_prueba.search('Leo', 'nombre'))
 
 # lista_valores = [5, 1, 5, 0, 10, 7]
 # 
