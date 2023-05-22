@@ -2,10 +2,8 @@
 
 def criterio_comparacion(value, criterio):
     if isinstance(value, (int, str, bool)):
-        # print('es un primitivo')
         return value
     else:
-        # print('no es un dato primitivo')
         dic_atributos = value.__dict__
         if criterio in dic_atributos:
             return dic_atributos[criterio]
@@ -69,11 +67,15 @@ class Lista():
         for value in self.__elements:
             print(value)
 
-    def order_by(self, criterio=None):
-        def criterio_nombre(valor):
-            return valor.nombre
+    def order_by(self, criterio=None, reverse=False):
+        dic_atributos = self.__elements[0].__dict__
+        if criterio in dic_atributos:
+            def func_criterio(valor):
+                return valor.__dict__[criterio]
 
-        self.__elements.sort(key=criterio_comparacion(criterio=criterio))
+            self.__elements.sort(key=func_criterio, reverse=reverse)
+        else:
+            print('no se puede ordenar por este criterio')
 
     # def get_element_by_value(self, value):
     #     return_value = None
@@ -118,7 +120,7 @@ class Persona():
 
 
 lista_prueba = Lista()
-
+lista_valores = []
 
 def cargar_lista(lista_aux):
     personas = [
@@ -130,6 +132,7 @@ def cargar_lista(lista_aux):
         ['Julieta', 'Alem', 20],
     ]
     for persona in personas:
+        lista_valores.append(Persona(persona[0], persona[1], persona[2]))
         lista_prueba.insert(Persona(persona[0], persona[1], persona[2]), 'apellido')
 
 def comienza_con(lista_aux, letra):
@@ -141,6 +144,7 @@ def comienza_con(lista_aux, letra):
             print(persona)
     print('prueba')
     print()
+
 
 cargar_lista(lista_prueba)
 comienza_con(lista_prueba, 'Mar')
@@ -175,14 +179,15 @@ lista_prueba.barrido()
 
 # lista_prueba.barrido()
 # print()
-position = lista_prueba.search('Impini', 'apellido')
-if position:
-    lista_prueba.get_element_by_index(position).edad = 100
-    print('edad de persona', lista_prueba.get_element_by_index(position).edad)
-persona = lista_prueba.delete('Perez', 'apellido')
-print('persona eliminada', persona)
-persona.apellido = 'Peréz'
+# position = lista_prueba.search('Sittoni', 'apellido')
+# if position:
+#     lista_prueba.get_element_by_index(position).nombre = 'Mariela'
+    # print('edad de persona', lista_prueba.get_element_by_index(position).edad)
+persona = lista_prueba.delete('Sittoni', 'apellido')
+# print('persona eliminada', persona)
+persona.apellido = 'Alvarez'
 lista_prueba.insert(persona, 'apellido')
+lista_prueba.order_by('nombre', True)
 print()
 lista_prueba.barrido()
 # print(lista_prueba.get_element_by_index(position))
@@ -221,3 +226,20 @@ lista_prueba.barrido()
 #     if value == 'c':
 #         print(f'lo encontre en la posicion {index}')
 #     print(index, value)
+# def apellido_nombre(item):
+#     print(criterio)
+#     return item.apellido+item.nombre
+
+# def nombre(item):
+#     return item.nombre
+
+# def apellido(item):
+#     return item.apellido
+
+# def edad(item):
+#     return item.edad
+
+# lista_valores.sort(key=apellido_nombre)
+# print()
+# for persona in lista_valores:
+#     print(persona)
