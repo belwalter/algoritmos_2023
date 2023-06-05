@@ -52,7 +52,7 @@ class Lista():
             return self.search_r(search_value, middle+1, last, criterio)
         else:
             return self.search_r(search_value, first, middle-1, criterio)
-
+ 
     def delete(self, value, criterio=None):
         return_value = None
         pos = self.search(value, criterio)
@@ -147,7 +147,9 @@ def comienza_con(lista_aux, letra):
 
 
 cargar_lista(lista_prueba)
-comienza_con(lista_prueba, 'Mar')
+
+
+# comienza_con(lista_prueba, 'Mar')
 # persona1.
 # print(criterio_comparacion(persona1, 'apellido'))
 
@@ -164,6 +166,9 @@ comienza_con(lista_prueba, 'Mar')
 # lista_prueba.insert(persona6, 'apellido')
 
 lista_prueba.barrido()
+print()
+for i in range(lista_prueba.size()-1, -1, -1):
+    print(lista_prueba.get_element_by_index(i))
 # lista_prueba.insert(5)
 # lista_prueba.insert(3)
 # lista_prueba.insert(1)
@@ -181,15 +186,15 @@ lista_prueba.barrido()
 # print()
 # position = lista_prueba.search('Sittoni', 'apellido')
 # if position:
-#     lista_prueba.get_element_by_index(position).nombre = 'Mariela'
+#     lista_prueba.get_element_by_index(position).apellido = 'Alvarez'
+#     lista_prueba.order_by('apellido')
     # print('edad de persona', lista_prueba.get_element_by_index(position).edad)
-persona = lista_prueba.delete('Sittoni', 'apellido')
+# persona = lista_prueba.delete('Sittoni', 'apellido')
 # print('persona eliminada', persona)
-persona.apellido = 'Alvarez'
-lista_prueba.insert(persona, 'apellido')
-lista_prueba.order_by('nombre', True)
-print()
-lista_prueba.barrido()
+# persona.apellido = 'Alvarez'
+# lista_prueba.insert(persona, 'apellido')
+# print()
+# lista_prueba.barrido()
 # print(lista_prueba.get_element_by_index(position))
 # lista_prueba.order_by()
 # print(lista_prueba.search('Leo', 'nombre'))
@@ -243,3 +248,4 @@ lista_prueba.barrido()
 # print()
 # for persona in lista_valores:
 #     print(persona)
+

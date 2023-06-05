@@ -12,7 +12,6 @@ def factorialr(numero):
         return numero * factorialr(numero-1)
 
 
-
 def factoriali(numero):
     """resuleve el factorial de un numero n de manera iterativo"""
     factorial = 1
@@ -38,6 +37,7 @@ def fibonacciR(numero):
         # print(fib)
         return fib
         # return fibonacci(numero-1) + fibonacci(numero-2)
+
 
 def fibonacciI(numero):
     fib_0 = 0
