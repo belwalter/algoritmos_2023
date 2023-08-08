@@ -1,4 +1,5 @@
 
+from lista import Lista as ListaSimple
 
 def criterio_comparacion(value, criterio):
     if isinstance(value, (int, str, bool)):
@@ -18,15 +19,15 @@ class Lista():
 
     def insert(self, value, criterio=None):
         # print('criterio de insercion', criterio)
-        if len(self.__elements) == 0 or criterio_comparacion(value, criterio) >= criterio_comparacion(self.__elements[-1], criterio):
-            self.__elements.append(value)
-        elif criterio_comparacion(value, criterio) < criterio_comparacion(self.__elements[0], criterio):
-            self.__elements.insert(0, value)
+        if len(self.__elements) == 0 or criterio_comparacion(value, criterio) >= criterio_comparacion(self.__elements[-1][0], criterio):
+            self.__elements.append([value, ListaSimple()])
+        elif criterio_comparacion(value, criterio) < criterio_comparacion(self.__elements[0][0], criterio):
+            self.__elements.insert(0, [value, ListaSimple()])
         else:
             index = 1
-            while criterio_comparacion(value, criterio) >= criterio_comparacion(self.__elements[index], criterio):
+            while criterio_comparacion(value, criterio) >= criterio_comparacion(self.__elements[index][0], criterio):
                 index += 1
-            self.__elements.insert(index, value)
+            self.__elements.insert(index, [value, ListaSimple()])
 
     def search(self, search_value, criterio=None):
         position = None
@@ -34,25 +35,14 @@ class Lista():
         last = self.size() - 1
         while (first <= last and position == None):
             middle = (first + last) // 2
-            if search_value == criterio_comparacion(self.__elements[middle], criterio):
+            if search_value == criterio_comparacion(self.__elements[middle][0], criterio):
                 position = middle
-            elif search_value > criterio_comparacion(self.__elements[middle], criterio):
+            elif search_value > criterio_comparacion(self.__elements[middle][0], criterio):
                 first = middle + 1
             else:
                 last = middle - 1
         return position
 
-    def search_r(self, search_value, first, last, criterio=None):
-        middle = (first + last) // 2
-        if first > last:
-            return None
-        elif search_value == criterio_comparacion(self.__elements[middle], criterio):
-            return middle
-        elif search_value > criterio_comparacion(self.__elements[middle], criterio):
-            return self.search_r(search_value, middle+1, last, criterio)
-        else:
-            return self.search_r(search_value, first, middle-1, criterio)
- 
     def delete(self, value, criterio=None):
         return_value = None
         pos = self.search(value, criterio)
@@ -65,10 +55,12 @@ class Lista():
 
     def barrido(self):
         for value in self.__elements:
-            print(value)
+            print(value[0])
+            print('Sublista ----------------')
+            value[1].barrido()
 
     def order_by(self, criterio=None, reverse=False):
-        dic_atributos = self.__elements[0].__dict__
+        dic_atributos = self.__elements[0][0].__dict__
         if criterio in dic_atributos:
             def func_criterio(valor):
                 return valor.__dict__[criterio]
@@ -77,25 +69,17 @@ class Lista():
         else:
             print('no se puede ordenar por este criterio')
 
-    # def get_element_by_value(self, value):
-    #     return_value = None
-    #     pos = self.search(value)
-
-    #     if pos is not None:
-    #         return_value = self.__elements[pos]
-    #     return return_value
-
     def get_element_by_index(self, index):
         return_value = None
         if index >= 0 and index < self.size():
             return_value = self.__elements[index]
         return return_value
 
-    def set_value(self, value, new_value, criterio=None):
-        pos = self.search(value, criterio)
-        if pos is not None:
-            value = self.delete(value)
-            self.insert(new_value, criterio)
+    # def set_value(self, value, new_value, criterio=None):
+    #     pos = self.search(value, criterio)
+    #     if pos is not None:
+    #         value = self.delete(value)
+    #         self.insert(new_value, criterio)
 
 
 class Persona():
@@ -104,11 +88,20 @@ class Persona():
         self.nombre = nombre
         self.edad = edad
         self.apellido = apellido
+        # self.materia = None
 
     def __str__(self):
         return f'{self.nombre} - {self.apellido} - {self.edad}'
 
+class Materia():
+    
+    def __init__(self, nombre, nota):
+        self.nombre = nombre
+        self.nota = nota
 
+
+    def __str__(self):
+        return f'{self.nombre}'
 # class Producto():
     
 #     def __init__(self, id, tipo):
@@ -119,7 +112,7 @@ class Persona():
 #         return f'{self.id} - {self.tipo}'
 
 
-# lista_prueba = Lista()
+lista_prueba = Lista()
 # lista_valores = []
 
 # def cargar_lista(lista_aux):
@@ -154,6 +147,53 @@ class Persona():
 # print(criterio_comparacion(persona1, 'apellido'))
 
 # print(persona1.__dict__)
+
+
+persona = Persona('perez', 'juan', 13)
+lista_prueba.insert(persona, 'nombre')
+persona = Persona('alba', 'ana', 13)
+lista_prueba.insert(persona, 'nombre')
+persona = Persona('nose', 'matias', 13)
+lista_prueba.insert(persona, 'nombre')
+
+
+# print(lista_prueba.get_element_by_index(0)[0])
+# print(lista_prueba.get_element_by_index(0)[1].size())
+
+pos = lista_prueba.search('perez', 'nombre')
+# print(pos)
+if pos:
+    value = lista_prueba.get_element_by_index(pos) 
+    # print(value[0])
+    value[1].insert(Materia('programacion 1', 9), 'nota')
+    value[1].insert(Materia('programacion 2', 10), 'nota')
+
+pos = lista_prueba.search('nose', 'nombre')
+# print(pos)
+if pos:
+    value = lista_prueba.get_element_by_index(pos) 
+    # print(value[0])
+    value[1].insert(Materia('ingenieria', 9), 'nota')
+    value[1].insert(Materia('ingles', 8), 'nota')
+
+pos = lista_prueba.search('alba', 'nombre')
+print(pos)
+if pos > -1:
+    value = lista_prueba.get_element_by_index(pos) 
+    # print(value[0])
+    value[1].insert(Materia('matematica', 7), 'nota')
+
+# lista_prueba.barrido()
+
+pos = lista_prueba.search('nose', 'nombre')
+if pos:
+    pos_aux = lista_prueba.get_element_by_index(pos)[1].search(8, 'nota')
+    if pos_aux is not None:
+        print('cursa la materia')
+    else:
+        print('no cursa la materia')
+
+
 
 
 # lista_prueba.insert(prod1, 'id')
