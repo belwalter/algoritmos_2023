@@ -59,6 +59,18 @@ class Lista():
             print('Sublista ----------------')
             value[1].barrido()
 
+    def barrido_entrenadores(self):
+        for value in self.__elements:
+            print(value[0])
+            print('Lista de Pokemons:')
+            value[1].barrido()
+            print()
+
+    def barrido_cantidad_torneos_ganados(self, cantidad_victorias):
+        for value in self.__elements:
+            if value[0].ct_ganados > cantidad_victorias:
+                print(value[0])
+
     def order_by(self, criterio=None, reverse=False):
         dic_atributos = self.__elements[0][0].__dict__
         if criterio in dic_atributos:
@@ -112,7 +124,7 @@ class Materia():
 #         return f'{self.id} - {self.tipo}'
 
 
-lista_prueba = Lista()
+# lista_prueba = Lista()
 # lista_valores = []
 
 # def cargar_lista(lista_aux):
@@ -149,49 +161,49 @@ lista_prueba = Lista()
 # print(persona1.__dict__)
 
 
-persona = Persona('perez', 'juan', 13)
-lista_prueba.insert(persona, 'nombre')
-persona = Persona('alba', 'ana', 13)
-lista_prueba.insert(persona, 'nombre')
-persona = Persona('nose', 'matias', 13)
-lista_prueba.insert(persona, 'nombre')
+# persona = Persona('perez', 'juan', 13)
+# lista_prueba.insert(persona, 'nombre')
+# persona = Persona('alba', 'ana', 13)
+# lista_prueba.insert(persona, 'nombre')
+# persona = Persona('nose', 'matias', 13)
+# lista_prueba.insert(persona, 'nombre')
 
 
 # print(lista_prueba.get_element_by_index(0)[0])
 # print(lista_prueba.get_element_by_index(0)[1].size())
 
-pos = lista_prueba.search('perez', 'nombre')
+# pos = lista_prueba.search('perez', 'nombre')
 # print(pos)
-if pos:
-    value = lista_prueba.get_element_by_index(pos) 
-    # print(value[0])
-    value[1].insert(Materia('programacion 1', 9), 'nota')
-    value[1].insert(Materia('programacion 2', 10), 'nota')
+# if pos:
+#     value = lista_prueba.get_element_by_index(pos) 
+#     # print(value[0])
+#     value[1].insert(Materia('programacion 1', 9), 'nota')
+#     value[1].insert(Materia('programacion 2', 10), 'nota')
 
-pos = lista_prueba.search('nose', 'nombre')
+# pos = lista_prueba.search('nose', 'nombre')
+# # print(pos)
+# if pos:
+#     value = lista_prueba.get_element_by_index(pos) 
+#     # print(value[0])
+#     value[1].insert(Materia('ingenieria', 9), 'nota')
+#     value[1].insert(Materia('ingles', 8), 'nota')
+
+# pos = lista_prueba.search('alba', 'nombre')
 # print(pos)
-if pos:
-    value = lista_prueba.get_element_by_index(pos) 
-    # print(value[0])
-    value[1].insert(Materia('ingenieria', 9), 'nota')
-    value[1].insert(Materia('ingles', 8), 'nota')
+# if pos > -1:
+#     value = lista_prueba.get_element_by_index(pos) 
+#     # print(value[0])
+#     value[1].insert(Materia('matematica', 7), 'nota')
 
-pos = lista_prueba.search('alba', 'nombre')
-print(pos)
-if pos > -1:
-    value = lista_prueba.get_element_by_index(pos) 
-    # print(value[0])
-    value[1].insert(Materia('matematica', 7), 'nota')
+# # lista_prueba.barrido()
 
-# lista_prueba.barrido()
-
-pos = lista_prueba.search('nose', 'nombre')
-if pos:
-    pos_aux = lista_prueba.get_element_by_index(pos)[1].search(8, 'nota')
-    if pos_aux is not None:
-        print('cursa la materia')
-    else:
-        print('no cursa la materia')
+# pos = lista_prueba.search('nose', 'nombre')
+# if pos:
+#     pos_aux = lista_prueba.get_element_by_index(pos)[1].search(8, 'nota')
+#     if pos_aux is not None:
+#         print('cursa la materia')
+#     else:
+#         print('no cursa la materia')
 
 
 
