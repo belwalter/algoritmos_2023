@@ -101,10 +101,11 @@ for pos in range(1, lista_entrenadores.size()):
 valor = lista_entrenadores.get_element_by_index(pos_mayor)
 entrenador, sublista = valor[0], valor[1]
 
-pokemon_mayor = sublista.get_element_by_index(0)
-for pos in range(1, sublista.size()):
-    pokemon = sublista.get_element_by_index(pos)
-    if pokemon.nivel > pokemon_mayor.nivel:
-        pokemon_mayor = pokemon
+if sublista.size() > 0:
+    pokemon_mayor = sublista.get_element_by_index(0)
+    for pos in range(1, sublista.size()):
+        pokemon = sublista.get_element_by_index(pos)
+        if pokemon.nivel > pokemon_mayor.nivel:
+            pokemon_mayor = pokemon
 
 print(f'El pokemon de mayor nivel del entrenador {entrenador.nombre} es {pokemon_mayor.nombre} {pokemon_mayor.nivel} ')
