@@ -1,3 +1,6 @@
+from cola import Cola
+
+
 class NodeTree():
 
     def __init__(self, value, other_values=None):
@@ -24,6 +27,19 @@ class BinaryTree:
             return root
 
         self.root = __insertar(self.root, value, other_values)
+
+    def by_level(self):
+        if self.root is not None:
+            cola_tree = Cola()
+            cola_tree.arrive(self.root)
+            while cola_tree.size() > 0:
+                node = cola_tree.atention()
+                print(node.value)
+                # a = input()
+                if node.left is not None:
+                    cola_tree.arrive(node.left)
+                if node.right is not None:
+                    cola_tree.arrive(node.right)
 
     def inorden(self):
         def __inorden(root):

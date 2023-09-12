@@ -26,17 +26,19 @@ arbol.inorden_start_with('R')
 print()
 print('cantidad de superheroes', arbol.contar_heroes())
 print()
-arbol.search_by_coincidence('do')
+# arbol.search_by_coincidence('do')
 
-value = input('ingrese el nombre que desea modificar ')
-pos = arbol.search(value)
-if pos:
-    is_hero = pos.other_values
-    arbol.delete_node(value)
-    print('modificar')
-    new_value = input('ingrese en nuevo nombre ')
-    arbol.insert_node(new_value, is_hero)
-else:
-    print('no esta')
-print()
-arbol.inorden()
+# value = input('ingrese el nombre que desea modificar ')
+# pos = arbol.search(value)
+# if pos:
+#     is_hero = pos.other_values
+#     arbol.delete_node(value)
+#     print('modificar')
+#     new_value = input('ingrese en nuevo nombre ')
+#     arbol.insert_node(new_value, is_hero)
+# else:
+#     print('no esta')
+# print()
+# arbol.inorden()
+
+arbol.by_level()
