@@ -8,12 +8,62 @@ class NodeTree():
         self.other_values = other_values
         self.left = None
         self.right = None
+        self.height = 0
 
 
 class BinaryTree:
 
     def __init__(self):
         self.root = None
+
+    def height(self, root):
+        if root is None:
+            return -1
+        else:
+            return root.height
+
+    def update_height(self, root):
+        if root is not None:
+            left_height = self.height(root.left)
+            right_height = self.height(root.right)
+            root.height = (left_height if left_height > right_height else right_height) + 1
+
+    def simple_rotation(self, root, control):
+        if control:
+            aux = root.left
+            root.left = aux.right
+            aux.right = root
+        else:
+            aux = root.right
+            root.right = aux.left
+            aux.left = root
+        self.update_height(root)
+        self.update_height(aux)
+        root = aux
+        return root
+
+    def double_rotation(self, root, control):
+        if control:
+            root.left = self.simple_rotation(root.left, False)
+            root = self.simple_rotation(root, True)
+        else:
+            root.right = self.simple_rotation(root.right, True)
+            root = self.simple_rotation(root, False)
+        return root
+
+    def balancing(self, root):
+        if root is not None:
+            if self.height(root.left) - self.height(root.right) == 2:
+                if self.height(root.left.left) >= self.height(root.left.right):
+                    root = self.simple_rotation(root, True)
+                else:
+                    root = self.double_rotation(root, True)
+            elif self.height(root.right) - self.height(root.left) == 2:
+                if self.height(root.right.right) >= self.height(root.right.left):
+                    root = self.simple_rotation(root, False)
+                else:
+                    root = self.double_rotation(root, False)
+        return root
 
     def insert_node(self, value, other_values=None):
 
@@ -24,6 +74,10 @@ class BinaryTree:
                 root.left = __insertar(root.left, value, other_values)
             else:
                 root.right = __insertar(root.right, value, other_values)
+            print('izquierda', self.height(root.left) - self.height(root.right))
+            print('derecha', self.height(root.right) - self.height(root.left))
+            root = self.balancing(root)
+            self.update_height(root)
             return root
 
         self.root = __insertar(self.root, value, other_values)
@@ -82,7 +136,7 @@ class BinaryTree:
     def preorden(self):
         def __preorden(root):
             if root is not None:
-                print(root.value)
+                print(root.value, root.height)
                 __preorden(root.left)
                 __preorden(root.right)
 
@@ -167,7 +221,17 @@ class BinaryTree:
             return count
 
         return __contar_heroes(self.root)
-# arbol = BinaryTree()
+
+arbol = BinaryTree()
+
+for i in range(15):
+    arbol.insert_node(i)
+
+arbol.preorden()
+
+# arbol.root = arbol.balancing(arbol.root)
+
+
 
 # print(arbol.root)
 # arbol.insert_node('F')
