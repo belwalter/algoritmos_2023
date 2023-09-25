@@ -108,5 +108,3 @@ tabla_numero[posicion].insert('FN-2187')
 #         print('cantidad de elementos posicion', index, lista.size())
 #         lista.barrido()
 #         print()
-
-dic = {}

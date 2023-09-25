@@ -109,3 +109,13 @@ if sublista.size() > 0:
             pokemon_mayor = pokemon
 
 print(f'El pokemon de mayor nivel del entrenador {entrenador.nombre} es {pokemon_mayor.nombre} {pokemon_mayor.nivel} ')
+
+
+pos = lista_entrenadores.search('Juan', 'nombre')
+if pos is not None:
+    valor = lista_entrenadores.get_element_by_index(pos)
+    entrenador, sublista = valor[0], valor[1]
+    sublista.order_by('nivel')
+    print(f'{entrenador.nombre} tiene {sublista.size()} pokemons')
+
+print()

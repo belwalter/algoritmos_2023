@@ -1,5 +1,12 @@
 from cola import Cola
+import linecache
 
+
+def get_value_from_file(file_name, index):
+    line = linecache.getline(file_name, index)
+    line_split = line.split(';')
+    line_split.pop()
+    return line_split
 
 class NodeTree():
 
@@ -74,8 +81,6 @@ class BinaryTree:
                 root.left = __insertar(root.left, value, other_values)
             else:
                 root.right = __insertar(root.right, value, other_values)
-            print('izquierda', self.height(root.left) - self.height(root.right))
-            print('derecha', self.height(root.right) - self.height(root.left))
             root = self.balancing(root)
             self.update_height(root)
             return root
@@ -104,6 +109,27 @@ class BinaryTree:
 
         __inorden(self.root)
 
+    def inorden_file(self, file_name):
+        def __inorden_file(root, file_name):
+            if root is not None:
+                __inorden_file(root.left, file_name)
+                value = get_value_from_file(file_name, root.other_values)
+                print(root.value, value[0])
+                __inorden_file(root.right, file_name)
+
+        __inorden_file(self.root, file_name)
+
+    def inorden_file_lightsaber(self, file_name, lightsaber_color):
+        def __inorden_file_lightsaber(root, file_name, lightsaber_color):
+            if root is not None:
+                __inorden_file_lightsaber(root.left, file_name, lightsaber_color)
+                value = get_value_from_file(file_name, root.other_values)
+                if lightsaber_color in value[4].split('/'):
+                    print(root.value, value[4].split('/'))
+                __inorden_file_lightsaber(root.right, file_name, lightsaber_color)
+
+        __inorden_file_lightsaber(self.root, file_name, lightsaber_color)
+
     def inorden_super_or_villano(self, is_hero):
         def __inorden_s_v(root, is_hero):
             if root is not None:
@@ -122,7 +148,15 @@ class BinaryTree:
                     print(root.value)
                 __inorden_start_with(root.right, cadena)
 
-        __inorden_start_with(self.root, cadena)
+    def inorden_start_with_jedi(self, cadena):
+        def __inorden_start_with_jedi(root, cadena):
+            if root is not None:
+                __inorden_start_with_jedi(root.left, cadena)
+                if root.value.upper().startswith(cadena):
+                    print(root.value)
+                __inorden_start_with_jedi(root.right, cadena)
+
+        __inorden_start_with_jedi(self.root, cadena)
 
     def postorden(self):
         def __postorden(root):
@@ -222,12 +256,12 @@ class BinaryTree:
 
         return __contar_heroes(self.root)
 
-arbol = BinaryTree()
+# arbol = BinaryTree()
 
-for i in range(15):
-    arbol.insert_node(i)
+# for i in range(15):
+#     arbol.insert_node(i)
 
-arbol.preorden()
+# arbol.preorden()
 
 # arbol.root = arbol.balancing(arbol.root)
 
