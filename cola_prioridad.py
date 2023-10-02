@@ -1,6 +1,6 @@
 
 
-class Heap:
+class ColaPrioridad:
 
     def __init__(self):
         self.vector = []
@@ -52,21 +52,22 @@ class Heap:
             vector.append(self.remove_element())
         return vector
 
+    def arrive(self, value, priority):
+        self.add_element([priority, value])
 
-heap = Heap()
+    def atention(self):
+        return self.remove_element()
+
+cola = ColaPrioridad()
 from random import randint
 
-vector = []
-for i in range(15):
-    numero = randint(1, 50)
-    vector.append(numero)
+for i in range(10):
+    prioridad = randint(1, 3)
+    numero = randint(1, 10)
+    cola.arrive(numero, prioridad)
 
-print(vector)
+print(cola.vector)
 print()
-heap.vector = vector
-heap.montculizar()
-print()
-vector = heap.hepasort()
+while cola.size() > 0:
+    print(cola.atention())
 
-print()
-print(vector)
