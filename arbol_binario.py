@@ -109,6 +109,28 @@ class BinaryTree:
 
         __inorden(self.root)
 
+    def inorden_ranking(self, ranking):
+        def __inorden_ranking(root, ranking):
+            if root is not None:
+                __inorden_ranking(root.left, ranking)
+                if root.other_values['derrotado'] is not None:
+                    if root.other_values['derrotado'] not in ranking:
+                        ranking[root.other_values['derrotado']] = 1
+                    else:
+                        ranking[root.other_values['derrotado']] += 1
+                __inorden_ranking(root.right, ranking)
+
+        __inorden_ranking(self.root, ranking)
+
+    def inorden_add_field(self):
+        def __inorden_add_field(root):
+            if root is not None:
+                __inorden_add_field(root.left)
+                root.other_values['capturado'] = None
+                __inorden_add_field(root.right)
+
+        __inorden_add_field(self.root)
+
     def inorden_file(self, file_name):
         def __inorden_file(root, file_name):
             if root is not None:
@@ -224,7 +246,8 @@ class BinaryTree:
                     else:
                         root.left, replace_node = __replace(root.left)
                         root.value = replace_node.value
-
+                    root = self.balancing(root)
+                    self.update_height(root)
             return root, value
 
         delete_value = None
@@ -259,8 +282,10 @@ class BinaryTree:
 # arbol = BinaryTree()
 
 # for i in range(15):
-#     arbol.insert_node(i)
+#     arbol.insert_node(name, {'derrotado_por': derrotado})
 
+
+# pos.other_values['capurado_por'] = 'asdas'
 # arbol.preorden()
 
 # arbol.root = arbol.balancing(arbol.root)
