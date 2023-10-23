@@ -1,4 +1,5 @@
 from lista import Lista as ListaArista
+from cola import Cola
 
 class Arista:
 
@@ -130,24 +131,60 @@ class Grafo():
             vertice[2] = False
 
     def deep_list(self, poscion=0):
-        if self.size() > 0:
-            origen = self.get_element_by_index(poscion)
-            while origen is not None:
-                if not origen[2]:
-                    origen[2] = True
-                    print(origen[0])
-                    adjacentes = origen[1]
+        origen = self.get_element_by_index(poscion)
+        if origen is not None:
+            if not origen[2]:
+                origen[2] = True
+                print(origen[0])
+                adjacentes = origen[1]
+                for index in range(adjacentes.size()):
+                    arista = adjacentes.get_element_by_index(index).vertice
+                    vertice_adjacente = self.search_vertice(arista)
+                    if vertice_adjacente is not None:
+                        adjacente = self.get_element_by_index(vertice_adjacente)
+                        if not adjacente[2]:
+                            self.deep_list(poscion=vertice_adjacente)
+                
+    def amplitude_list(self, posicion=0):
+        origen = self.get_element_by_index(posicion)
+        if origen is not None:
+            cola_pendientes = Cola()
+            cola_pendientes.arrive(origen)
+            while not cola_pendientes.size() == 0:
+                vertice = cola_pendientes.atention()
+                if not vertice[2]:
+                    vertice[2] = True
+                    print(vertice[0])
+                    adjacentes = vertice[1]
                     for index in range(adjacentes.size()):
                         arista = adjacentes.get_element_by_index(index).vertice
                         vertice_adjacente = self.search_vertice(arista)
                         if vertice_adjacente is not None:
                             adjacente = self.get_element_by_index(vertice_adjacente)
                             if not adjacente[2]:
-                                print('llamada recursiva vertice', adjacente[0])
-                                self.deep_list(poscion=vertice_adjacente)
-
+                                cola_pendientes.arrive(adjacente)
             
-
+    def has_path(self, origen, destino):
+        result = False
+        origen = self.search_vertice(origen)
+        if origen is not None:
+            vertice_origen = self.get_element_by_index(origen)
+            if not vertice_origen[2]:
+                vertice_origen[2] = True
+                print(vertice_origen[0])
+                adjacentes = vertice_origen[1]
+                pos_destino = adjacentes.search(destino, 'vertice')
+                if pos_destino is not None:
+                    result = True
+                    return result
+                for index in range(adjacentes.size()):
+                    arista = adjacentes.get_element_by_index(index).vertice
+                    vertice_adjacente = self.search_vertice(arista)
+                    if vertice_adjacente is not None:
+                        adjacente = self.get_element_by_index(vertice_adjacente)
+                        if not adjacente[2]:
+                            result = self.has_path(adjacente[0], destino)
+        return result
 
 from random import randint
 
@@ -165,6 +202,8 @@ mi_grafo.insert_arist(Arista('Z', 144), 'A', 'Z', criterio_arista='vertice')
 mi_grafo.insert_arist(Arista('J', 4), 'A', 'J', criterio_arista='vertice')
 mi_grafo.insert_arist(Arista('B', 4), 'J', 'B', criterio_arista='vertice')
 mi_grafo.insert_arist(Arista('J', 33), 'Z', 'J', criterio_arista='vertice')
+mi_grafo.insert_arist(Arista('W', 133), 'F', 'W', criterio_arista='vertice')
+mi_grafo.insert_arist(Arista('W', 22), 'A', 'W', criterio_arista='vertice')
 
 mi_grafo.barrido()
 
@@ -186,6 +225,14 @@ print(mi_grafo.is_adyacent('A', 'F'))
 print()
 mi_grafo.adyacents('A')
 
-# mi_grafo.barrido()
+mi_grafo.barrido()
 print()
-mi_grafo.deep_list()
+# mi_grafo.deep_list(poscion=2)
+# print()
+# mi_grafo.deep_list()
+# mi_grafo.mark_as_not_visited()
+# print()
+# mi_grafo.amplitude_list()
+
+
+print(mi_grafo.has_path('A', 'F'))
