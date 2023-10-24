@@ -40,7 +40,7 @@ class Grafo():
                 index += 1
             self.__elements.insert(index, [value, ListaArista(), False])
 
-    def insert_arist(self, vertice_ori, vertice_des, peso, criterio_vertice=None, criterio_arista=None):
+    def insert_arist(self, vertice_ori, vertice_des, peso, criterio_vertice=None, criterio_arista='vertice'):
         origen = self.search_vertice(vertice_ori, criterio_vertice)
         destino = self.search_vertice(vertice_des, criterio_vertice)
         if origen is not None and destino is not None:
@@ -220,14 +220,14 @@ mi_grafo.insert_vertice('X')
 mi_grafo.insert_vertice('R')
 mi_grafo.insert_vertice('Z')
 
-mi_grafo.insert_arist('T', 'R', 8, criterio_arista='vertice')
-mi_grafo.insert_arist('T', 'F', 3, criterio_arista='vertice')
-mi_grafo.insert_arist('T', 'X', 6, criterio_arista='vertice')
-mi_grafo.insert_arist('F', 'R', 2, criterio_arista='vertice')
-mi_grafo.insert_arist('F', 'X', 2, criterio_arista='vertice')
-mi_grafo.insert_arist('X', 'Z', 9, criterio_arista='vertice')
-mi_grafo.insert_arist('X', 'R', 5, criterio_arista='vertice')
-mi_grafo.insert_arist('R', 'Z', 4, criterio_arista='vertice')
+mi_grafo.insert_arist('T', 'R', 8)
+mi_grafo.insert_arist('T', 'F', 3)
+mi_grafo.insert_arist('T', 'X', 6)
+mi_grafo.insert_arist('F', 'R', 2)
+mi_grafo.insert_arist('F', 'X', 2)
+mi_grafo.insert_arist('X', 'Z', 9)
+mi_grafo.insert_arist('X', 'R', 5)
+mi_grafo.insert_arist('R', 'Z', 4)
 
 # mi_grafo.barrido()
 
