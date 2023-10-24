@@ -1,5 +1,7 @@
 from lista import Lista as ListaArista
 from cola import Cola
+from pila import Pila
+from heap_min import Heap
 
 class Arista:
 
@@ -38,16 +40,13 @@ class Grafo():
                 index += 1
             self.__elements.insert(index, [value, ListaArista(), False])
 
-    def insert_arist(self, value, vertice_ori, vertice_des, criterio_vertice=None, criterio_arista=None):
-        from copy import copy
+    def insert_arist(self, vertice_ori, vertice_des, peso, criterio_vertice=None, criterio_arista=None):
         origen = self.search_vertice(vertice_ori, criterio_vertice)
         destino = self.search_vertice(vertice_des, criterio_vertice)
         if origen is not None and destino is not None:
-            self.get_element_by_index(origen)[1].insert(value, criterio_arista)
+            self.get_element_by_index(origen)[1].insert(Arista(vertice_des, peso), criterio_arista)
             if not self.dirigido:
-                new_arista = copy(value)
-                new_arista.vertice = vertice_ori
-                self.get_element_by_index(destino)[1].insert(new_arista, criterio_arista)
+                self.get_element_by_index(destino)[1].insert(Arista(vertice_ori, peso), criterio_arista)
 
     def search_vertice(self, search_value, criterio=None):
         position = None
@@ -171,7 +170,7 @@ class Grafo():
             vertice_origen = self.get_element_by_index(origen)
             if not vertice_origen[2]:
                 vertice_origen[2] = True
-                print(vertice_origen[0])
+                # print(vertice_origen[0])
                 adjacentes = vertice_origen[1]
                 pos_destino = adjacentes.search(destino, 'vertice')
                 if pos_destino is not None:
@@ -186,26 +185,51 @@ class Grafo():
                             result = self.has_path(adjacente[0], destino)
         return result
 
+    def dijkstra(self, origen, destino):
+        from math import inf
+        """Algoritmo de Dijkstra para hallar el camino mas corto."""
+        no_visitados = Heap()
+        camino = Pila()
+        for i in range(self.size()):
+            vertice = self.get_element_by_index(i)    
+            if(vertice[0] == origen):
+                no_visitados.arrive(vertice, 0)
+            else:
+                no_visitados.arrive(vertice, inf)
+
+        while no_visitados.size() > 0:
+            vertice = no_visitados.atention()
+            camino.push([vertice[1][0], vertice[0], vertice[2]])
+            adjacentes = vertice[1][1]
+            for index in range(adjacentes.size()):
+                arista = adjacentes.get_element_by_index(index)
+                pos = no_visitados.search(arista.vertice)
+                if pos is not None:
+                    if(no_visitados.vector[pos][0] > vertice[0] + arista.peso):
+                        no_visitados.vector[pos][2] = vertice[1][0]
+                        no_visitados.change_priority(pos, vertice[0] + arista.peso)
+        return camino
+
 from random import randint
 
 mi_grafo = Grafo(dirigido=False)
 
-mi_grafo.insert_vertice('A')
-mi_grafo.insert_vertice('B')
+mi_grafo.insert_vertice('T')
 mi_grafo.insert_vertice('F')
+mi_grafo.insert_vertice('X')
+mi_grafo.insert_vertice('R')
 mi_grafo.insert_vertice('Z')
-mi_grafo.insert_vertice('W')
-mi_grafo.insert_vertice('J')
 
-mi_grafo.insert_arist(Arista('B', 14), 'A', 'B', criterio_arista='vertice')
-mi_grafo.insert_arist(Arista('Z', 144), 'A', 'Z', criterio_arista='vertice')
-mi_grafo.insert_arist(Arista('J', 4), 'A', 'J', criterio_arista='vertice')
-mi_grafo.insert_arist(Arista('B', 4), 'J', 'B', criterio_arista='vertice')
-mi_grafo.insert_arist(Arista('J', 33), 'Z', 'J', criterio_arista='vertice')
-mi_grafo.insert_arist(Arista('W', 133), 'F', 'W', criterio_arista='vertice')
-mi_grafo.insert_arist(Arista('W', 22), 'A', 'W', criterio_arista='vertice')
+mi_grafo.insert_arist('T', 'R', 8, criterio_arista='vertice')
+mi_grafo.insert_arist('T', 'F', 3, criterio_arista='vertice')
+mi_grafo.insert_arist('T', 'X', 6, criterio_arista='vertice')
+mi_grafo.insert_arist('F', 'R', 2, criterio_arista='vertice')
+mi_grafo.insert_arist('F', 'X', 2, criterio_arista='vertice')
+mi_grafo.insert_arist('X', 'Z', 9, criterio_arista='vertice')
+mi_grafo.insert_arist('X', 'R', 5, criterio_arista='vertice')
+mi_grafo.insert_arist('R', 'Z', 4, criterio_arista='vertice')
 
-mi_grafo.barrido()
+# mi_grafo.barrido()
 
 origen = 'A'
 destino = 'Z'
@@ -221,9 +245,9 @@ if pos_origen is not None:
 
 # print(mi_grafo.delete_arista('A', 'B'))
 # print(mi_grafo.delete_vertice('B'))
-print(mi_grafo.is_adyacent('A', 'F'))
-print()
-mi_grafo.adyacents('A')
+# print(mi_grafo.is_adyacent('A', 'F'))
+# print()
+# mi_grafo.adyacents('A')
 
 mi_grafo.barrido()
 print()
@@ -235,4 +259,21 @@ print()
 # mi_grafo.amplitude_list()
 
 
-print(mi_grafo.has_path('A', 'F'))
+# print(mi_grafo.has_path('A', 'F'))
+
+# path = mi_grafo.dijkstra('A', 'F')
+
+ori = 'Z'
+des = 'X'
+origen = mi_grafo.search_vertice(ori)
+destino = mi_grafo.search_vertice(des)
+camino_mas_corto = None
+if(origen is not None and destino is not None):
+    if(mi_grafo.has_path(ori, des)):
+        camino_mas_corto = mi_grafo.dijkstra(ori, des)
+        fin = des
+        while camino_mas_corto.size() > 0:
+            value = camino_mas_corto.pop()
+            if fin == value[0]:
+                print(value[0], value[1])
+                fin = value[2]
