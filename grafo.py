@@ -73,14 +73,14 @@ class Grafo():
         return return_value
 
     def delete_arista(self, origen, destino):
-        pos_origen = mi_grafo.search_vertice(origen)
+        pos_origen = self.search_vertice(origen)
         if pos_origen is not None:
-            ver_origen = mi_grafo.get_element_by_index(pos_origen)
+            ver_origen = self.get_element_by_index(pos_origen)
             delete = ver_origen[1].delete(destino, 'vertice')
             if not self.dirigido:
-                pos_destino = mi_grafo.search_vertice(destino)
+                pos_destino = self.search_vertice(destino)
                 if pos_destino is not None:
-                    ver_destino = mi_grafo.get_element_by_index(pos_destino)
+                    ver_destino = self.get_element_by_index(pos_destino)
                     ver_destino[1].delete(origen, 'vertice')
             return delete
 
@@ -112,17 +112,17 @@ class Grafo():
 
     def is_adyacent(self, origen, destino):
         result = False
-        pos_origen = mi_grafo.search_vertice(origen)
+        pos_origen = self.search_vertice(origen)
         if pos_origen is not None:
-            ver_origen = mi_grafo.get_element_by_index(pos_origen)
+            ver_origen = self.get_element_by_index(pos_origen)
             arista = ver_origen[1].search(destino, 'vertice')
             result = True if arista is not None else False
         return result
 
     def adyacents(self, origen):
-        pos_origen = mi_grafo.search_vertice(origen)
+        pos_origen = self.search_vertice(origen)
         if pos_origen is not None:
-            ver_origen = mi_grafo.get_element_by_index(pos_origen)
+            ver_origen = self.get_element_by_index(pos_origen)
             ver_origen[1].barrido()
 
     def mark_as_not_visited(self):
@@ -210,6 +210,47 @@ class Grafo():
                         no_visitados.change_priority(pos, vertice[0] + arista.peso)
         return camino
 
+
+    def kruskal(self):
+        def buscar_en_bosque(bosque, buscado):
+            for index, arbol in enumerate(bosque):
+                if buscado in arbol:
+                    return index
+
+        bosque = []
+        aristas = Heap()
+        for index in range(self.size()):
+            vertice = self.get_element_by_index(index)
+            bosque.append(vertice[0])
+            aristas_adjacentes = vertice[1]
+            for i in range(aristas_adjacentes.size()):
+                arista = aristas_adjacentes.get_element_by_index(i)
+                aristas.arrive([vertice[0], arista.vertice], arista.peso)
+
+        while len(bosque) > 1 and aristas.size() > 0:
+            arista = aristas.atention()
+            origen = buscar_en_bosque(bosque, arista[1][0])
+            destino = buscar_en_bosque(bosque, arista[1][1])
+            if origen is not None and destino is not None:
+                if origen != destino:
+                    if origen > destino:
+                        vertice_ori = bosque.pop(origen)
+                        vertice_des = bosque.pop(destino)
+                    else:
+                        vertice_des = bosque.pop(destino)
+                        vertice_ori = bosque.pop(origen)
+
+                    if '-' not in vertice_ori and '-' not in vertice_des:
+                        bosque.append(f'{vertice_ori}-{vertice_des}-{arista[0]}')
+                    elif '-' not in vertice_des:
+                        bosque.append(vertice_ori+';'+f'{arista[1][0]}-{vertice_des}-{arista[0]}')
+                    elif '-' not in vertice_ori:
+                        bosque.append(vertice_des+';'+f'{vertice_ori}-{arista[1][1]}-{arista[0]}')
+                    else:
+                        bosque.append(vertice_ori+';'+vertice_des+';'+f'{arista[1][0]}-{arista[1][1]}-{arista[0]}')
+
+        return bosque
+
 from random import randint
 
 mi_grafo = Grafo(dirigido=False)
@@ -220,6 +261,10 @@ mi_grafo.insert_vertice('X')
 mi_grafo.insert_vertice('R')
 mi_grafo.insert_vertice('Z')
 
+mi_grafo.insert_vertice('P')
+mi_grafo.insert_vertice('J')
+
+mi_grafo.insert_arist('P', 'J', 8)
 mi_grafo.insert_arist('T', 'R', 8)
 mi_grafo.insert_arist('T', 'F', 3)
 mi_grafo.insert_arist('T', 'X', 6)
@@ -263,17 +308,23 @@ print()
 
 # path = mi_grafo.dijkstra('A', 'F')
 
-ori = 'Z'
-des = 'X'
-origen = mi_grafo.search_vertice(ori)
-destino = mi_grafo.search_vertice(des)
-camino_mas_corto = None
-if(origen is not None and destino is not None):
-    if(mi_grafo.has_path(ori, des)):
-        camino_mas_corto = mi_grafo.dijkstra(ori, des)
-        fin = des
-        while camino_mas_corto.size() > 0:
-            value = camino_mas_corto.pop()
-            if fin == value[0]:
-                print(value[0], value[1])
-                fin = value[2]
+# ori = 'Z'
+# des = 'X'
+# origen = mi_grafo.search_vertice(ori)
+# destino = mi_grafo.search_vertice(des)
+# camino_mas_corto = None
+# if(origen is not None and destino is not None):
+#     if(mi_grafo.has_path(ori, des)):
+#         camino_mas_corto = mi_grafo.dijkstra(ori, des)
+#         fin = des
+#         while camino_mas_corto.size() > 0:
+#             value = camino_mas_corto.pop()
+#             if fin == value[0]:
+#                 print(value[0], value[1])
+#                 fin = value[2]
+
+bosque = mi_grafo.kruskal()
+for arbol in bosque:
+    print('arbol')
+    for nodo in arbol.split(';'):
+        print(nodo)

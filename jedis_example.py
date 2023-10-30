@@ -25,7 +25,7 @@ for index, linea_jedi in enumerate(read_lines):
 # print()
 # specie_tree.by_level()
 
-pos = name_tree.search('yoda1')
+pos = name_tree.search('yoda')
 if pos:
     print(get_value_from_file('jedis.txt', pos.other_values))
 else:
