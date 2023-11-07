@@ -16,7 +16,7 @@ class Heap:
         return value
 
     def flotar(self, index):
-        while index > 0 and self.vector[index] < self.vector[(index-1)//2]:
+        while index > 0 and self.vector[index][0] < self.vector[(index-1)//2][0]:
             padre = (index-1)//2
             self.vector[index], self.vector[padre] = self.vector[padre], self.vector[index]
             index = padre
@@ -28,10 +28,10 @@ class Heap:
             hijo_der = hijo_izq + 1
             menor = hijo_izq
             if hijo_der < len(self.vector):
-                if self.vector[hijo_der] < self.vector[hijo_izq]:
+                if self.vector[hijo_der][0] < self.vector[hijo_izq][0]:
                     menor = hijo_der
 
-            if self.vector[index] > self.vector[menor]:
+            if self.vector[index][0] > self.vector[menor][0]:
                 self.vector[index], self.vector[menor] = self.vector[menor], self.vector[index]
                 index = menor
                 hijo_izq = (index*2) + 1
