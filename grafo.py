@@ -223,7 +223,7 @@ class Grafo():
         aristas = Heap()
         for index in range(self.size()):
             vertice = self.get_element_by_index(index)
-            bosque.append(vertice[0].nombre)
+            bosque.append(criterio_comparacion(vertice[0], 'nombre'))
             aristas_adjacentes = vertice[1]
             for i in range(aristas_adjacentes.size()):
                 arista = aristas_adjacentes.get_element_by_index(i)
