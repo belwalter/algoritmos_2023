@@ -19,6 +19,12 @@ jobs:
       with:
         node-version: '20'  # Usar Node.js versión 16
 
+    - name: Debug information
+      run: |
+        echo "Current directory: $PWD"
+        echo "Python location: $pythonLocation"
+        echo "LD_LIBRARY_PATH: $LD_LIBRARY_PATH"
+        
     - name: List files in the repository
       run: ls -R
 
