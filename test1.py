@@ -5,4 +5,4 @@
 #     print(value['nombre'], value['edad'])
 
 
-from prueba_package import test_import
+# from prueba_package import test_import
