@@ -19,6 +19,9 @@ jobs:
       with:
         node-version: '20'  # Usar Node.js versión 16
 
+    - name: List files in directory
+      run: ls -la
+      
     - name: Debug information
       run: |
         echo "Current directory: $PWD"
