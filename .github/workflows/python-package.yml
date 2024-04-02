@@ -19,8 +19,10 @@ jobs:
       with:
         node-version: '20'  # Usar Node.js versión 16
 
-    - name: List files in directory
-      run: ls -la $PWD
+    - name: Check current directory
+      run: |
+        pwd
+        ls -la $PWD
 
     - name: Install dependencies
       run: |
