@@ -20,21 +20,12 @@ jobs:
         node-version: '20'  # Usar Node.js versión 16
 
     - name: List files in directory
-      run: ls -la
-      
-    - name: Debug information
-      run: |
-        echo "Current directory: $PWD"
-        echo "Python location: $pythonLocation"
-        echo "LD_LIBRARY_PATH: $LD_LIBRARY_PATH"
-        
-    - name: List files in the repository
-      run: ls -R
+      run: ls $PWD
 
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install -r $PWD/requirements.txt  # Instalar dependencias desde requirements.txt
+        # pip install -r $PWD/requirements.txt  # Instalar dependencias desde requirements.txt
 
     - name: Run tests
       run: pytest
